@@ -1,1 +1,1 @@
-# SCU_bolckchain_wallet
+# SCU_blockchain_wallet
