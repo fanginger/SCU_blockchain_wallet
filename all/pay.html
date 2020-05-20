@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>pay</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/get_current_user.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body id="top">
+		<header id="header" class="skel-layers-fixed">
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="wallet.html">My_wallet</a></li>
+					<li><a href="pay.html">GOPAY</a></li>
+					<li><a href="login.html">Login</a></li>
+					<li><a href="login.html">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section id="two" class="wrapper style2 special">
+			<div class="inner narrow">
+				<header>
+					<h2>Payment</h2>
+				</header>
+				<form class="grid-form" id="pay_form" role="form" action="https://backend.scoingroup.link/send_token_form" method="post">
+					<div class="form-group">
+						<input type="hidden" class="form-control" id="X-API-key" name="X-API-key" value="71efe65ae128e4562fdba2292b2b3f190845c7h3" />
+						<input type="hidden" class="form-control" id="txn" name="txn" value="UTLBFAUYQWAMPIFJTUROZOVRCOBVA9MVXETYIGFBPMWNXJXI9VWJYOVIORRXEKLBIMEAZYHFQNHFA9999" />
+						<input type="hidden" class="form-control" id="method" name="method" value="2" />
+						<!-- <input type="hidden" class="form-control" id="description" name="description" value="Light token" /> -->
+						Sender: <input type="text" class="form-control" id="sen" name="sen" value="" />
+						Cost: <input type="text" class="form-control" id="cost" name="cost" value="" />
+					</div>
+					<div class="form-group">
+						Receiver: <input type="text" class="form-control" id="rev" name="rev" value="" />
+						Message: <input type="text" class="form-control" id="message" name="message" value="" />
+					</div>
+					<!-- <input type='button' name='submit' value='GOPAY' class="form-control" onclick='processFormData();' /> -->
+				</form>
+				<form class="grid-form" method="post" action="#">
+					<input type='button' class="form-control" value='GOPAY' class="form-control" id="clickpay">
+				</form>                 
+				<form action="#">
+					<div style='display: none' class="form-control" id="password">
+						<label for="password">password</label>
+						<input name="message" id="message" ></input>
+						<p></p>
+						<input type='button' name='submit' value='GO' class="form-control" onclick='processFormData();' />
+					</div>
+				</form>
+			</div>
+		</section>
+		
+		<script src="assets/js/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$("#click_recieve").click(function(){
+					$("#recieve_by").fadeToggle();
+				});
+				$("#clickpay").click(function(){
+					$("#password").fadeToggle();
+				});
+				$("#aboutme").click(function(){
+					$("#aboutme_detail").fadeToggle();
+				});
+
+			});
+		</script>
+
+		<script>
+			function processFormData() {
+				const api = document.getElementById("X-API-key").value;
+				const senElement = document.getElementById("sen");
+				const sender = document.getElementById("sen").value;
+				const revElement = document.getElementById("rev");
+				const receiver = revElement.value;
+				const descriptionElement = document.getElementById("message");
+				const description = descriptionElement.value;
+				const txnElement = document.getElementById("txn");
+				const txn = txnElement.value;
+				const data  =  {
+					"sen":sender,
+					"rev":receiver,
+					"method":'2',
+					"description":description,
+					"txn":txn,
+				}
+				console.log(data);
+				$.ajax({
+					url: "http://3.87.137.58:8888/send_token",
+					type: 'POST',
+					headers:{
+						"contentType":'application/json;',
+						"X-API-key":api,
+					},
+					contentType: 'application/json;',
+					data:JSON.stringify(data),
+					success: function (result) {
+						console.log('result',result);
+					},
+					error: function (error) {
+						alert("Cannot get data");
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
+			
