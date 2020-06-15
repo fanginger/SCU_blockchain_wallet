@@ -96,6 +96,10 @@
 					contentType: 'application/json;',
 					data:JSON.stringify(sinup),
 					success: function (result) {
+						if(result.includes('Account already exist')){
+							alert('account already exists')
+						}
+
 						console.log('result',result);
 					},
 					error: function (error) {

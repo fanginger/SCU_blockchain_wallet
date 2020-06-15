@@ -28,10 +28,10 @@
 				<header>
 					<h2>Payment</h2>
 				</header>
-				<form class="grid-form" id="pay_form" role="form" action="https://backend.scoingroup.link/send_token_form" method="post">
+				<form class="grid-form" id="pay_form" role="form" action="#">
 					<div class="form-group">
-						<input type="hidden" class="form-control" id="X-API-key" name="X-API-key" value="71efe65ae128e4562fdba2292b2b3f190845c7h3" />
-						<input type="hidden" class="form-control" id="txn" name="txn" value="UTLBFAUYQWAMPIFJTUROZOVRCOBVA9MVXETYIGFBPMWNXJXI9VWJYOVIORRXEKLBIMEAZYHFQNHFA9999" />
+						<!-- <input type="hidden" class="form-control" id="X-API-key" name="X-API-key" value="71efe65ae128e4562fdba2292b2b3f190845c7h3" /> -->
+						<!-- <input type="hidden" class="form-control" id="txn" name="txn" value="UTLBFAUYQWAMPIFJTUROZOVRCOBVA9MVXETYIGFBPMWNXJXI9VWJYOVIORRXEKLBIMEAZYHFQNHFA9999" /> -->
 						<input type="hidden" class="form-control" id="method" name="method" value="2" />
 						<!-- <input type="hidden" class="form-control" id="description" name="description" value="Light token" /> -->
 						Sender: <input type="text" class="form-control" id="sen" name="sen" value="" />
@@ -44,14 +44,14 @@
 					<!-- <input type='button' name='submit' value='GOPAY' class="form-control" onclick='processFormData();' /> -->
 				</form>
 				<form class="grid-form" method="post" action="#">
-					<input type='button' class="form-control" value='GOPAY' class="form-control" id="clickpay">
+					<input type='button' class="form-control" value='GOPAY' class="form-control" id="clickpay" onclick="">
 				</form>                 
 				<form action="#">
-					<div style='display: none' class="form-control" id="password">
-						<label for="password">password</label>
-						<input name="message" id="message" ></input>
+					<div style='display: none' class="form-control" id="password_div">
+						<label for="password" >password</label>
+						<input name="message" id='password' ></input>
 						<p></p>
-						<input type='button' name='submit' value='GO' class="form-control" onclick='processFormData();' />
+						<input type='button' name='submit' value='GO' class="form-control" onclick='processFormData()' />
 					</div>
 				</form>
 			</div>
@@ -64,7 +64,7 @@
 					$("#recieve_by").fadeToggle();
 				});
 				$("#clickpay").click(function(){
-					$("#password").fadeToggle();
+					$("#password_div").fadeToggle();
 				});
 				$("#aboutme").click(function(){
 					$("#aboutme_detail").fadeToggle();
@@ -74,40 +74,90 @@
 		</script>
 
 		<script>
-			function processFormData() {
-				const api = document.getElementById("X-API-key").value;
-				const senElement = document.getElementById("sen");
-				const sender = document.getElementById("sen").value;
-				const revElement = document.getElementById("rev");
-				const receiver = revElement.value;
-				const descriptionElement = document.getElementById("message");
-				const description = descriptionElement.value;
-				const txnElement = document.getElementById("txn");
-				const txn = txnElement.value;
-				const data  =  {
-					"sen":sender,
-					"rev":receiver,
-					"method":'2',
-					"description":description,
-					"txn":txn,
+			function find_coin(){
+				const sen_name = document.getElementById("sen").value;
+				const num_coin  =  {
+					"method": "light",
+					"name":name,
+					"description":"Zhushan light eID",
+					"pub_key":"",
 				}
-				console.log(data);
+				return $.ajax({
+					url: "http://3.87.137.58:8888/get_balance?user="+sen_name,
+					type: 'Get',
+					success: function (result) {
+						if(result != ''){
+							console.log(sen_name)	
+							console.log('result',result);
+							var res = result.substring(0, 81);
+							console.log(res)
+							// return res
+						}
+						else{
+							alert('oh you dont have money')
+						}
+					},
+					error: function (error) {
+						alert("Cannot get data");
+					}
+					
+				});
+				console.log('all done')
+				
+				
+			}
+			function processFormData(callback) {
+				const password = document.getElementById("password").value;
+				const sender = document.getElementById("sen").value;
+				const receiver = document.getElementById("rev").value;
+				const description = document.getElementById("message").value;
+				const txnElement = document.getElementById("txn");
+				// const txn = txnElement.value;
+				// var coin = await find_coin()
+				// find_coin().done(function(data){
+				// //do something else with data here
+				// 	console.log(data)
+				// });
+				// var coin = callback()
+				// console.log(coin)
+				$.when(find_coin()).done(function(tex){
+					
+					var coin = tex.substring(0, 81);
+					console.log(tex)
+					const data  =  {
+						"sen":sender,
+						"rev":receiver,
+						"method":'2',
+						"description":description,
+						"txn":coin,
+					}
+					console.log(data);
+				console.log(password)
 				$.ajax({
 					url: "http://3.87.137.58:8888/send_token",
 					type: 'POST',
 					headers:{
 						"contentType":'application/json;',
-						"X-API-key":api,
+						"X-API-key":password,
 					},
 					contentType: 'application/json;',
 					data:JSON.stringify(data),
 					success: function (result) {
+						if(result.includes('error')){
+							alert('please check');
+						}
+						alert('帳單成功');
+						
 						console.log('result',result);
+
 					},
 					error: function (error) {
 						alert("Cannot get data");
 					}
 				});
+					alert('帳單成立請稍待');
+				})
+				
 			}
 		</script>
 	</body>
