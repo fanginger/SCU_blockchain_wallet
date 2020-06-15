@@ -154,8 +154,9 @@
 					
 					success: function (result) {
 						console.log('result',result);
-						if(result){			
-							if(result.includes('error')){
+						console.log('result',typeof(result));
+						if(result){		
+							if(result.status == ('error')){
 								alert('error please check');
 							}									
 							else{
