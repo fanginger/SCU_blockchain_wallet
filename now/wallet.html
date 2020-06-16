@@ -46,9 +46,32 @@
                   <div class="feature feature2">
                       <p id="clickpay">條碼</p>
                   </div>          
-              </form>
+			  </form>
+			  <h3>近期交易紀錄</h3>
+              <form class='trans_form' method="post" >
+
+              <div class="transaction">
+                <div class="icon-type">
+                  <div class="icon"></div>
+                </div>
+                <div class="description">
+                  <div class="info">
+                    <h3 id="trans_sender" value=""> </h3>
+                    <span id="trans_message"></span>
+
+                    -<span id="trans_time"></span>
+                  </div>
+                  <div class="info">
+                    <h3 id="trans_money"></h3>
+                    <span id='status'></span>
+                    
+                  </div>
+                </div>
+              </div>
+            </form>
             </div>
 		</section>
+		<script src="assets/js/jquery.min.js"></script>
 		<script>
 			$(document).ready(function(){
 				$('#logout_button').click(function(){
@@ -56,6 +79,55 @@
 				sessionStorage.removeItem("key");
 				});
 			});
+			$.ajax({
+					type: "get",
+					url: "http://localhost:1993/pay",
+					success: function(data){
+						console.log(data['sender']);
+						var trans_data = data
+						$('#trans_sender').text(trans_data['sender'])
+						$('#trans_message').text(trans_data['message'])
+						$('#trans_time').text(trans_data['time']) 
+						console.log(trans_data['cost'] )
+						console.log(typeof(trans_data['cost']))
+						if(trans_data['cost']== ''){
+							$('#trans_money').text( '+ 1 東吳幣') 
+						}
+						else{
+							$('#trans_money').text( '+',trans_data['cost'],'東吳幣') 
+						}
+						
+					},
+					error: function (error) {
+						alert("Cannot get data");
+					}
+			});	
+			
 		</script>
+		 <style>
+			.trans_form{
+			  width: 90%;
+			}
+			
+			.transaction {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			padding: 20px 0;
+			}
+			.description {
+			  display: flex;
+			  justify-content: space-between;
+			  width: 100%;
+			  color: rgb(162, 161, 161);
+			}
+			.info h3{
+			  display: block;
+			  width: 100%;
+			  margin: 0 0 10px;
+			  color: rgb(72, 72, 72);
+			  font-size: 18px;
+			}
+		  </style>
 	</body>
 </html>

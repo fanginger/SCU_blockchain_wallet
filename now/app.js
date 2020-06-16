@@ -36,6 +36,7 @@ function insert(name,psw,email,academy,grade,identity){
     })
 }
 
+
 /*註冊頁面數據接收*/
 app.post('/register', function (req, res) {
   //處理跨域的問題
@@ -128,6 +129,19 @@ function insertpay(sender,receiver,cost,message){
         }
     })
 }
+app.get('/pay',function(req,res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    PaySchema.find({},function(err,data){
+        var data_send = data
+        console.log(data_send[0])
+        res.send(JSON.stringify(data_send[0]))
+    })
+
+})
 /*轉帳頁面數據接收*/
 app.post('/pay', function (req, res) {
   //處理跨域的問題
@@ -157,3 +171,6 @@ app.post('/pay', function (req, res) {
 
 
 app.listen(1993, () =>console.log('Example app listening on port 3000!'))
+// PaySchema.find({'sender':'Ginger'},function(err,data){
+//     console.log( data );
+// })

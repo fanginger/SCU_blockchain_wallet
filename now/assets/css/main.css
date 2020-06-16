@@ -2007,7 +2007,10 @@
 	form {
 		margin: 0 0 2em 0;
 	}
-
+	#pay_form{
+		display: flex;
+		justify-content: center;
+	}
 	.grid-form {
 		display: -moz-flex;
 		display: -webkit-flex;
