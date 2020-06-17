@@ -105,7 +105,7 @@ app.post('/register', function (req, res) {
 app.post('/login', function (req, res, next) {
   //先查詢有沒有這個user
   console.log("req.body"+req.body);
-  window.UserName = req.body.username;
+  var UserName = req.body.username;
   var UserPsw = req.body.password;
   //通过账号密码搜索验证
   var updatestr = {username: UserName,userpsw:UserPsw};
