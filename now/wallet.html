@@ -34,7 +34,7 @@
         <section id="two" class="wrapper style special">
             <div class="inner narrow">
                 <header>
-					<h2>目前金額</h2>
+					<h2 id="username"></h2>
 					<!-- <h4 id="show"></h4> -->
                     <div id="balance"></div>
                 </header>
@@ -119,6 +119,7 @@
 		</script>
 		<script src="assets/js/jquery.min.js"></script>
 		<script>
+			document.getElementById("username").innerHTML = sessionStorage.getItem("key");
 			$(document).ready(function(){
 				$('#logout_button').click(function(){
 				console.log('remove')
