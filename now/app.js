@@ -8,7 +8,8 @@ var mongoose = require('mongoose');
 
 
 //連接本地數據庫
-var DB_URL = 'mongodb://localhost:27017/wallet'
+// var DB_URL = 'mongodb://localhost:27017/wallet'
+var DB_URL = 'mongodb+srv://gingerfan:ginger94090@cluster0-zigdt.gcp.mongodb.net/mywallet?retryWrites=true&w=majority'
 mongoose.connect(DB_URL);
 
 

@@ -35,7 +35,7 @@
             <div class="inner narrow">
                 <header>
 					<h2 id="username"></h2>
-					<!-- <h4 id="show"></h4> -->
+		
                     <div id="balance"></div>
                 </header>
                 
@@ -47,7 +47,7 @@
                       <p id="clickpay">條碼</p>
                   </div>          
 			  </form>
-			  <h3>近期交易紀錄</h3>
+			  <h3 id='trans_tilte'>近期交易紀錄</h3>
 			<!-- trans dib -->
               <form class='trans_form'>
 			<!-- first  -->
@@ -119,7 +119,8 @@
 		</script>
 		<script src="assets/js/jquery.min.js"></script>
 		<script>
-			document.getElementById("username").innerHTML = sessionStorage.getItem("key");
+			// document.getElementById("username").innerHTML = sessionStorage.getItem("key");
+			$('#username').text('Hello,' + sessionStorage.getItem("key"))
 			$(document).ready(function(){
 				$('#logout_button').click(function(){
 				console.log('remove')
@@ -129,11 +130,10 @@
 			$.ajax({
 				type: "get",
 				url: "http://localhost:1993/pay/"+sessionStorage.getItem("key"),
-				// url: "http://localhost:1993/pay",
 				dataType: "json",
 				success: function(data){
-					for ( i=1 ; i < 4 ; i++ ){
-						console.log(i);
+					if(data.length != 0){
+						for ( i=1 ; i < 4 ; i++ ){
 						var trans_data = data.pop()
 						// $('#trans_sender'+i).text(trans_data['sender'])
 						$('#trans_message'+i).text(trans_data['message'])
@@ -158,7 +158,15 @@
 								$('#trans_money'+i).text('+ '+trans_data['cost']+' 東吳幣')
 							}
 						}
-					}	
+						};	
+
+					}
+					else{
+						console.log('暫無交易資料')
+						$('#trans_tilte').text('暫無交易資料')
+						document.getElementById('trans_tilte').style.color="red"
+					}
+					
 				},
 				error: function (error) {
 					alert("Cannot get data");
