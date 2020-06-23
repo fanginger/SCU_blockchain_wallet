@@ -133,6 +133,28 @@ app.post('/login', function (req, res, next) {
     })
 });
 
+// setting get data
+app.get('/setting/:user',function(req,res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    var user_name =  req.params.user;
+    console.log(user_name)
+
+    userSchema.find({'username':user_name}, function(err, data){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log(data)
+            var data_send = data
+            console.log(data_send[0])
+            res.send(JSON.stringify(data_send))
+        }
+    })
+})
 
 /*插入數據函數*/
 function insertpay(sender,receiver,cost,message){
@@ -211,6 +233,6 @@ app.post('/pay', function (req, res) {
 
 
 app.listen(1993, () =>console.log('Example app listening on port 3000!'))
-// PaySchema.find({'sender':'Ginger'},function(err,data){
-//     console.log( data );
-// })
+
+
+

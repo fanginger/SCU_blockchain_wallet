@@ -29,9 +29,9 @@
 			get_balance_by_user("http://3.87.137.58:8888/get_balance?user="+name)
 		</script>
 		
-
+	
         <!-- mywallet -->
-        <section id="two" class="wrapper style special">
+        <section id="card_one" class="wrapper style special">
             <div class="inner narrow">
                 <header>
 					<h2 id="username"></h2>
@@ -110,18 +110,26 @@
             </form>
             </div>
 		</section>
-		<script>
+
+
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+        
+		<script> 
+		
 			var name = sessionStorage.getItem("key");
 			if (name == 'null'){
 				alert("請先登入");
 				window.location.href="login.html";	
 			}
-		</script>
-		<script src="assets/js/jquery.min.js"></script>
-		<script>
+		
 			// document.getElementById("username").innerHTML = sessionStorage.getItem("key");
 			$('#username').text('Hello,' + sessionStorage.getItem("key"))
 			$(document).ready(function(){
+			
 				$('#logout_button').click(function(){
 				console.log('remove')
 				sessionStorage.removeItem("key");
