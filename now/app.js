@@ -4,6 +4,9 @@ var app = express();
 var userSchema = require('./routes/user');
 var PaySchema = require('./routes/pay');
 var CourseshareSchema = require('./routes/course_share');
+var ForgotSchema = require('./routes/forgot');
+var ReserveSchema = require('./routes/reserve');
+var ReviewSchema = require('./routes/review');
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
 
@@ -284,6 +287,173 @@ app.post('/pay', function (req, res) {
 
   });
 
+/*插入數據函數*/
+function insertforgot(email){
+    //數據格式
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
+    var forgot =  new ForgotSchema({
+                user_email : email,
+                application_date : newdate
+            });
+    forgot.save(function(err,res){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(res);
+        }
+    })
+}
+
+/*註冊頁面數據接收*/
+app.post('/forgot', function (req, res) {
+    //處理跨域的問題
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    //先查詢有沒有這個user
+    var user_email = req.body.email;
+    var updatestr = {user_email: user_email};
+    ForgotSchema.find(updatestr, function(err, obj){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            insertforgot(user_email); 
+            res.send({status:'success',message:true})
+        }
+    })
+});
+
+
+/*插入數據函數*/
+function insertreserve(name,room,startDateTime,cancel){
+    //數據格式
+    var reserve =  new ReserveSchema({
+        name : name,
+        room : room,
+        startDateTime : startDateTime,
+        cancel : cancel
+     });
+    reserve.save(function(err,res){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(res);
+        }
+    })
+}
+
+app.get('/reserve/:room', function(req, res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    var room =  req.params.room;
+    var name = req.query.name;
+    var startDateTime = req.query.start;
+    var cancel = req.query.cancel;
+    var NewArray = new Array();
+    var NewArray = room.split("m");
+    var all_room = ['雙溪D509-完成室','雙溪D509-未來室','雙溪D509-藍沙發','雙溪D509-現在室','城中5615'];
+    room = all_room[NewArray[1]-1];
+    var timeArray = new Array();
+    var timeArray = startDateTime.split("(");
+    startDateTime = timeArray[0];
+    var updatestr = {startDateTime: startDateTime};
+    ReserveSchema.find(updatestr, function(err, obj){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            insertreserve(name,room,startDateTime,cancel); 
+            res.send({status:'success',message:true})
+        }
+    })
+  });
+
+app.get('/res_rec/:user',function(req,res){
+    res.setHeader('Content-type','application/json;charset=utf-8')
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    var updatestr = {'name': req.params.user};
+    ReserveSchema.find(updatestr, null, {sort: {startDateTime: -1}},function(err, data){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log(data)
+            var data_send = data
+            res.send(JSON.stringify(data_send))
+        }
+    })
+})
+
+/*插入數據函數*/
+function insertreview(name,star,comment){
+    //數據格式
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+    var hour = dateObj.getHours()   
+    var minute =dateObj.getMinutes() 
+
+    var newdate = year + "/" + month + "/" + day + ' '+ hour +":"+ minute;
+    console.log(newdate)
+    var review =  new ReviewSchema({
+                name : name,
+                star : star,
+                comment :comment,
+                reviewdate : newdate
+            });
+    review.save(function(err,res){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(res);
+        }
+    })
+}
+
+
+/*註冊頁面數據接收*/
+app.post('/review', function (req, res) {
+  //處理跨域的問題
+  res.setHeader('Content-type','application/json;charset=utf-8')
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By",' 3.2.1')
+  //先查詢有沒有這個user
+  var name = req.body.name;
+  var star = req.body.star;
+  var comment = req.body.comment;
+  var updatestr = {name: name};
+  ReviewSchema.find(updatestr, function(err, obj){
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            insertreview(name,star,comment);
+            res.send({status:'success',message:true})
+        }
+    })
+});
 
 app.listen(1993, () =>console.log('Example app listening on port 3000!'))
 
