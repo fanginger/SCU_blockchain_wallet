@@ -168,8 +168,6 @@
 		</section>
 
 		<script src="assets/js/jquery.min.js"></script>
-		<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
 		
 		<script>
@@ -192,7 +190,6 @@
 			}
 			$('#username').text('Hello,' + sessionStorage.getItem("key"))
 			$(document).ready(function(){
-			
 				$('#logout_button').click(function(){
 				console.log('remove')
 				sessionStorage.removeItem("key");
@@ -230,7 +227,6 @@
 					alert("Cannot get data");
 				}
 			});
-			
 		</script>
 		<script>
 			$.ajax({
@@ -270,7 +266,6 @@
 			.trans_form{
 			  width: 90%;
 			}
-			
 			.transaction {
 			display: flex;
 			flex-wrap: nowrap;
@@ -290,6 +285,6 @@
 			  color: rgb(72, 72, 72);
 			  font-size: 18px;
 			}
-		  </style>
+		</style>
 	</body>
 </html>
