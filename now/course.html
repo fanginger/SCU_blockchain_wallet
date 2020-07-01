@@ -20,7 +20,7 @@
                   <li><a href="course_share.html" >我要分享</a></li>
                   <li><a href="course.html" >快速查詢</a></li>
                   <li><a href="course_ask.html" >我要發問</a></li>
-                  <li><a href="course_ask.html" >發問區</a></li>
+                  <li><a href="course_askcenter.html" >發問區</a></li>
               </ul>
             </li>
             <li><a href="wallet.html">My_wallet</a>
@@ -200,7 +200,6 @@
                 display: block;
             }
 
-<<<<<<< HEAD
         #nav ul li ul li {
             clear: both;
             width: 100%;
@@ -225,25 +224,6 @@
                 sessionStorage.setItem('search_department',department_val)
                 window.location.href="course_search.html";
                 
-=======
-            #nav ul li ul li {
-                clear: both;
-                width: 100%;
-            }
-        </style>
-        <script>
-            $(document).ready(function(){
-                $('#share_button').click(function(){
-                    $("#share_div").fadeToggle();
-                })
-                $('#ask_button').click(function(){
-                    $("#ask_div").fadeToggle();
-                })
-                $('#search_button').click(function(){
-                    sessionStorage.setItem('search_name',$('#search_name').val())
-                    sessionStorage.setItem('search_teacher',$('#search_teacher').val())
-                    sessionStorage.setItem('search_grade',$('#search_name').val())
->>>>>>> ec43a985b3d4faddf09058452af2956d84508b8a
 
                 })
             });
@@ -255,6 +235,7 @@
                     if(data.length != 0){
                         for ( i=1 ; i < 5 ; i++ ){
                             var course_data = data.pop()
+                            
                             // $('#trans_sender'+i).text(trans_data['sender'])
                             $('#feature_coursename_'+i).text(course_data['course_name'] + '/' + course_data['course_teacher'])
                             var final = course_data['course_message'].substring(0,30)

@@ -20,7 +20,7 @@
                     <li><a href="course_share.html" >我要分享</a></li>
                     <li><a href="course.html" >快速查詢</a></li>
                     <li><a href="course_ask.html" >我要發問</a></li>
-                    <li><a href="course_ask.html" >發問區</a></li>
+                    <li><a href="course_askcenter.html" >發問區</a></li>
                 </ul>
                 </li>
                 <li><a href="wallet.html">My_wallet</a>
@@ -47,7 +47,7 @@
                    
                         <div class="form-group">
                             <label for="message">學系或科目類別</label>
-                            <select id = 'identity'>
+                            <select id = 'department'>
                                 <option  hidden>請選擇科目類別▾</option>
                                 <option value="1111中國文學系">中國文學系</option>
                                 <option value="1212歷史學系">歷史學系</option>
@@ -60,7 +60,7 @@
                         <br>
                         <div class="form-group" >
                             <label for="message">年級</label>
-                            <select id ='academy'>
+                            <select id ='grade'>
                                 <option  hidden>請選擇年級▾</option>
                                 <option>大一</option>
                                 <option>大二</option>
@@ -74,19 +74,19 @@
                        
                         <div class="form-control narrow">
                             <label for="name">課程名稱</label>
-                            <input name="name" id="name" type="text">
+                            <input name="name" id="course_name" type="text">
                         </div>
                         <div class="form-control narrow">
                             <label >老師名字</label>
-                            <input name="email" id="email" type="email">
+                            <input name="email" id="course_teacher" type="email">
                         </div>
                         <div class="form-control">
                             <label>詢問內容 課程需求及注意事項 老師上課風格</label>
-                            <textarea name="message" id="message" rows="3"></textarea>
+                            <textarea name="message" id="course_askmessage" rows="3"></textarea>
                         </div>
 
                         <ul class="actions">
-                            <li><input value="Send Message" type="submit"></li>
+                            <li><input value="Send Message" id='send_ask'type="button"></li>
                         </ul>
                 </form>
             </div>
@@ -100,11 +100,11 @@
 			}
 
 			$(document).ready(function(){
-				$('#send_share').click(function(){
+				$('#send_ask').click(function(){
 					var name = sessionStorage.getItem("key");
 					var course_name_val = document.getElementById("course_name").value;
 					var course_teacher_val = document.getElementById("course_teacher").value;
-					var course_message_val = document.getElementById("course_message").value;
+					var course_askmessage_val = document.getElementById("course_askmessage").value;
 					var i = document.getElementById("department");
 					var department_val = i.options[i.selectedIndex].value;
 					var g = document.getElementById("grade");
@@ -113,14 +113,14 @@
 
 					$.ajax({
 						type:'post',
-						url: "http://localhost:1993/course_share",
+						url: "http://localhost:1993/course_ask",
 						dataType: "json",
-						data:{ write_user:name ,course_name: course_name_val, course_teacher: course_teacher_val, course_message:course_message_val, department:department_val, grade:grade_val},
+						data:{ write_user:name ,course_name: course_name_val, course_teacher: course_teacher_val, course_askmessage:course_askmessage_val, department:department_val, grade:grade_val},
 						success: function(data){
 							console.log(data)
-							alert('you success')
-							document.getElementById("course_name").value = ''
-							document.getElementById("course_teacher").value = ''
+							alert('發問成功 可至發問區查詢')
+							window.location.href="course_askcenter.html";
+					
 						},
 						error: function (error) {
 							alert('faile')
