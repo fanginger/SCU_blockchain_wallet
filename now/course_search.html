@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>register</title>
+		<title>course_search</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="js/get_current_user.js"></script>
@@ -10,6 +10,7 @@
 		<script src="js/init.js"></script>
 		<link rel="stylesheet" href="assets/css/main.css" />	</head>
 	<body id="top">
+<<<<<<< HEAD
 		<header id="header" class="skel-layers-fixed">
 			<nav id="nav">
 				<ul>
@@ -51,6 +52,69 @@
                         <input value="查看全文" type="button">
                     </div>
                     <div class="feature_se" id="feature_4">
+=======
+        <header id="header" class="skel-layers-fixed">
+            <nav id="nav">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="reserve.html">Reserve</a></li>
+                <li><a href="course.html" >課程專區</a>
+                <ul>
+                    <li><a href="course_share.html" >我要分享</a></li>
+                    <li><a href="course.html" >快速查詢</a></li>
+                    <li><a href="course_ask.html" >我要發問</a></li>
+                    <li><a href="course_ask.html" >發問區</a></li>
+                </ul>
+                </li>
+                <li><a href="wallet.html">My_wallet</a>
+                <ul>
+                    <li><a href="wallet.html">交易紀錄</a></li>
+                    <li><a href="pay.html">GOPAY</a></li>
+                </ul>
+                </li>
+                <li><a href="setting.html" >個人帳戶</a>
+                <ul>
+                    <li><a href="setting.html" >個人資訊</a>
+                    <li><a href="allcard.html" >Card</a></li>
+                    <li><a href="index.html">Login</a></li>
+                    <li><a href="index.html" id="logout_button">Logout</a></li>
+                </ul>
+                </li>
+            </ul>
+            </nav>
+        </header>
+		<section id="one" class="wrapper style2 special">
+            <div id='ask_div' style='display: none;' class="inner narrow">
+                
+                <form class="grid-form" id='share' action="#">
+                   
+                        <div class="form-group">
+                            <label for="message">學系或科目類別</label>
+                            <select id = 'identity'>
+                                <option  hidden>請選擇科目類別▾</option>
+                                <option value="1111中國文學系">中國文學系</option>
+                                <option value="1212歷史學系">歷史學系</option>
+                                <option value="1313哲學系">哲學系</option>
+                                <option value="1414政治學系">政治學系</option>
+                                <option value="7070巨量資料管理學院學士學位學程">巨量資料管理學院學士學位學程</option>
+                                                                                                                                                                                                                     
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group" >
+                            <label for="message">年級</label>
+                            <select id ='academy'>
+                                <option  hidden>請選擇年級▾</option>
+                                <option>大一</option>
+                                <option>大二</option>
+                                <option>大三</option>
+                                <option>大四</option>
+                                <option>大五</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
+                        <br>
+>>>>>>> ec43a985b3d4faddf09058452af2956d84508b8a
                        
                         <h3 id="feature_coursename_4"></h3>
                         <p id="feature_message_4"></p>
@@ -68,7 +132,7 @@
 			var name = sessionStorage.getItem("key");
 			if (name == 'null'){
 				alert("請先登入");
-				window.location.href="login.html";	
+				window.location.href="index.html";	
 			}
 
 			$(document).ready(function(){
@@ -102,7 +166,46 @@
                         }
                 });
 			});
-		</script>
-	</body>
+        </script>
+        <script>
+            $(document).ready(function(){
+                $('#logout_button').click(function(){
+                console.log('remove')
+                sessionStorage.removeItem("key");
+                });
+            });
+        </script>
+    </body>
+    <style>
+        #nav li {
+            display: block;
+            float: left;
+        }
+        #nav li:hover {
+            cursor: pointer;
+        }
+
+        #nav ul li ul {
+            visibility: hidden;
+            display: none;
+            opacity: 0;
+        }
+        #nav a:hover {
+              /* 滑鼠滑入按鈕變色*/
+              background-color: #e9f1f1;
+              color: #fff;
+            }
+        #nav ul li:hover > ul,
+        #nav ul li ul:hover {
+            visibility: visible;
+            opacity: 1;
+            display: block;
+        }
+
+        #nav ul li ul li {
+            clear: both;
+            width: 100%;
+        }
+    </style>
 </html>
 		

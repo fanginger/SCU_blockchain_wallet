@@ -1,91 +1,186 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>home</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
-        <script src="js/jquery.min.js"></script>
-        <script src="js/skel.min.js"></script>
-        <script src="js/skel-layers.min.js"></script>
-        <script src="js/init.js"></script>
-        <link rel="stylesheet" href="assets/css/main.css" />
-    </head>
-    <body>
+	<head>
+		<title>login</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body id="top">
         <header id="header" class="skel-layers-fixed">
             <nav id="nav">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="reserve.html">Reserve</a></li>
+                <li><a href="course.html" >課程專區</a>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="wallet.html">My_wallet</a></li>
-                    <li><a href="pay.html">GOPAY</a></li>
-                    <li><a href="reserve.html">Reserve</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="login.html">Logout</a></li>
+                    <li><a href="course_share.html" >我要分享</a></li>
+                    <li><a href="course.html" >快速查詢</a></li>
+                    <li><a href="course_ask.html" >我要發問</a></li>
+                    <li><a href="course_ask.html" >發問區</a></li>
                 </ul>
+                </li>
+                <li><a href="wallet.html">My_wallet</a>
+                <ul>
+                    <li><a href="wallet.html">交易紀錄</a></li>
+                    <li><a href="pay.html">GOPAY</a></li>
+                </ul>
+                </li>
+                <li><a href="setting.html" >個人帳戶</a>
+                <ul>
+					<li><a href="setting.html" >個人資訊</a>
+                    <li><a href="allcard.html" >Card</a></li>
+                    <li><a href="index.html">Login</a></li>
+                    <li><a href="index.html" id="logout_button">Logout</a></li>
+                </ul>
+                </li>
+            </ul>
             </nav>
         </header>
-        <div class="outer narrow">
-            <br></br>
-            <header><h2>最新消息</h2></header>
-            <div style="width: 60%;">
-              <center>
-                <table >
-                <tr>
-                  <th>標題</th>
-                  <th>發布日期</th>
-                </tr>
-                <tr>
-                  <td>【2020.05.21】前端頁面即將完成</td>
-                  <td>2020.05.15</td>
-                </tr>
-                <tr>
-                  <td>【2020.05.28】前端部屬至AWS進行測試</td>
-                  <td>2020.05.15</td>
-                </tr>
-                </table>
-              </center>
-            </div>
-            <header><h2>熱門活動</h2></header>
-            <div class="upper">
-              <div><img src="images/1.jpg">哇嗚嗚熱門活動</div>
-              <div><img src="images/2.jpg">未來會有的活動</div>
-              <div><img src="images/4.jpg">哇嗚嗚熱門活動</div>
-              <div><img src="images/5.jpg">就是要和上面區別</div>
-              <div><img src="images/3.jpg">詞窮想不到了</div>
-            </div>
-        </div>
-        <style>
-            body{
-              background-color:  rgba(144, 144, 144, 0.075);
+		<section id="two" class="wrapper style2 special">
+			<div class="inner narrow">
+				<header>
+					<h2>LOGIN</h2>
+				</header>
+				<form class="grid-form"  role="form" action="/login" method="post">
+					<div class="form-group">
+						<label for="name">Username</label>
+						<p><input type="text" class="form-control" id="name" name="name" value="" placeholder="Enter user name" />	
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<p><input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" />
+					</div>
+					<input id='login' type='button' name='submit' value='LOGIN' class="form-control" />
+					<!-- <input  type='button' name='submit' value='LOGIN' class="form-control" onclick='login(); '/> -->
+					<br></br>
+					<div class="form-group">
+						<div class="form-check" >
+						  <input type="checkbox" class="form-check-input" id="dropdownCheck">
+						  <label class="form-check-label" for="dropdownCheck" id="remember_button">
+							Remember me
+						  </label>
+						</div>
+					  </div>
+				</form>
+
+				<a href="email.html">Forgot your password?</a>
+				<div class="form-group">
+					<p></p>
+					NO ACCOUNT?
+					<button type="submit" class="form-control" onclick="location.href='signup.html'" >SINGUP</button>
+				</div>
+			</div>
+		</section>
+		<script>
+			var name = sessionStorage.getItem("key");
+			if (name != 'null'){
+				alert("請先登出");
+				window.location.href="wallet.html";	
+			}
+		</script>
+		<script>
+			$(document).ready(function(){
+				if(localStorage.getItem('remember_me') == 'yes'){
+					console.log(localStorage.getItem('user_name'))
+					document.getElementById("name").value = localStorage.getItem('user_name')
+					document.getElementById("dropdownCheck").checked = true;
+				}
+				$('#logout_button').click(function(){
+					console.log('remove')
+					sessionStorage.removeItem("key");
+				});
+				$('#remember_button').click(function(){
+					if(localStorage.getItem('remember_me') == 'yes'){
+						console.log('no remember')
+						localStorage.removeItem('user_name')
+						localStorage.removeItem('remember')
+					}
+					else{
+						console.log('remember')
+						localStorage.setItem('user_name', $('#name').val());
+						localStorage.setItem('remember_me', 'yes');
+					}
+					
+				})
+			  //查询数据库确认账户密码是否正确
+			    $("#login").click(function(){
+				  var username=$('#name').val();
+				  var password=$('#password').val();
+				  //这里实现对 username和password格式的判断
+				  //........
+				  //发送ajax请求 使用post方式发送json字符串给后台login
+				  $.ajax({
+					  type: "post",
+					  url: "http://localhost:1993/login",
+					  dataType: "json",
+					  data:{ username: username, password: password },
+					  success: function(data){
+					  //接受返回的数据，前端判断采取的动作
+						console.log(data);
+						if(data){
+							if(data.message==false){
+							  alert('帳號密碼有誤')
+							  $("#name").val("");
+							  $("#password").val("");
+							}else{
+							  alert('登入成功');
+							sessionStorage.setItem("key", username);
+							window.location.href="home.html";
+							}
+						}
+					  }
+				  });
+			  })
+			})
+		  </script>
+	</body>
+	<style>
+		#nav li {
+			display: block;
+			float: left;
+		}
+		#nav li:hover {
+			cursor: pointer;
+		}
+
+		#nav ul li ul {
+			display: none;
+			visibility: hidden;
+			opacity: 0;
+		}
+		#nav a:hover {
+              /* 滑鼠滑入按鈕變色*/
+              background-color: #e9f1f1;
+              color: #fff;
             }
-            .nav-item a{
-              color: black;
-            }
-            .outer{
-              display: flex;
-              flex-direction: column;
-              align-items: center; 
-            }
-            .upper{
-              width: 80%;
-            }
-            img{
-              max-height: 50vh;
-              max-width: 40vh;
-            }
-        </style>
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-        
-        <script type="text/javascript">
-        $(document).ready(function(){
-            $('.upper').slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            dots: true,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            });
-        });
-        </script>
-    </body>
+		#nav ul li:hover > ul,
+		#nav ul li ul:hover {
+			visibility: visible;
+			opacity: 1;
+			display: block;
+		}
+
+		#nav ul li ul li {
+			clear: both;
+			width: 100%;
+		}
+
+		/* #nav ul {
+		display: none;
+		}
+
+		#nav li:hover>ul {
+		display: block;
+		} */
+
+	</style>
+
 </html>
+
+
+
