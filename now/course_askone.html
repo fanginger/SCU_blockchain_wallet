@@ -44,37 +44,30 @@
         <section class="wrapper style2 special">
             <div class="inner narrow">
                 <header>
-                    <h3>詢問區內容</h3>
+                    <h3>回答問題</h3>
                 </header>
                 <div class="features">
-                    <div class="feature_se" id="feature_1">
+                    <div class="feature_justone" id="feature_1">
                        
                         <h3 id="feature_coursename_1"></h3>
                         <p id="feature_message_1"></p>
                         <p id="feature_askdate_1"></p>
-                        <input value="查看全部問題" type="button">
-                    </div>
-                    <div class="feature_se" id="feature_2">
-                        <h3 id="feature_coursename_2"></h3>
-                        <p id="feature_message_2"></p>
-                        <p id="feature_askdate_2"></p>
-                        <input value="查看全部問題" type="button">
-                    </div>
-                    <div class="feature_se" id="feature_3">
-                       
-                        <h3 id="feature_coursename_3"></h3>
-                        <p id="feature_message_3"></p>
-                        <p id="feature_askdate_3"></p>
-                        <input value="查看全部問題" type="button">
-                    </div>
-                    <div class="feature_se" id="feature_4">
-                       
-                        <h3 id="feature_coursename_4"></h3>
-                        <p id="feature_message_4"></p>
-                        <p id="feature_askdate_4"></p>
-                        <input value="查看全部問題" type="button">
-                    </div>
+                        <!-- <input value="查看全部問題" type="button"> -->
+                        <br>
+                        <p>----------------------------------------------</p>
+                        
+                        <div class="form-control">
+                            <label>備註/心得</label>
+                            <textarea name="message" id="course_message" rows="1"></textarea>
+                        </div>
+                        <br>
+                        <ul class="actions">
+							<li><input id='send_share' value="回答問題 賺取幣" type="button"></li>
+                        </ul>
 
+                        <h3>回答區</h3>
+                        <p></p>
+                    </div>
                 </div>
                 
             </div>
@@ -89,42 +82,12 @@
 			}
 
 			$(document).ready(function(){
-               
-				$.ajax({
-                type: "get",
-                url: "http://localhost:1993/course_ask",
-                dataType: "json",
-                success: function(data){
-                    if(data.length != 0){
-                        for ( i=1 ; i < 5 ; i++ ){
-                            if(i<data.length+1){
-                                var ask_data = data.pop()
-                            
-                           
-                            $('#feature_coursename_'+i).text(ask_data['course_name'] + '/' + ask_data['course_teacher'])
-                            var final = ask_data['course_askmessage'].substring(0,30)
-                            console.log(final)
-                            $('#feature_message_'+i).text('心得 ： '+final) 
-                            $('#feature_askdate_'+i).text('詢問日期 ：'+ask_data['askdate'])
-                            
-                            }
-                            else{
-                                document.getElementById('feature_'+i).style.display = 'none';
-                            }
-                            
-
-                        };
-                    }
-                    else{
-                        console.log('暫無交易資料')
-                    }
-                    console.log(data)
-                    
-                },
-                error: function (error) {
-                    alert("Cannot get data");
-                }
-            });
+                var name = sessionStorage.getItem('ask_name')
+                var message = sessionStorage.getItem('ask_message')
+                var date = sessionStorage.getItem('ask_date')
+                $('#feature_coursename_1').text(name)
+                $('#feature_message_1').text(message)
+                $('#feature_askdate_1').text(date)
 			});
         </script>
         <script>

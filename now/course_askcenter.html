@@ -44,7 +44,7 @@
         <section class="wrapper style2 special">
             <div class="inner narrow">
                 <header>
-                    <h3>詢問區內容</h3>
+                    <h3>發問區內容</h3>
                 </header>
                 <div class="features">
                     <div class="feature_se" id="feature_1">
@@ -52,27 +52,27 @@
                         <h3 id="feature_coursename_1"></h3>
                         <p id="feature_message_1"></p>
                         <p id="feature_askdate_1"></p>
-                        <input value="查看全部問題" type="button">
+                        <input value="查看全部問題" class='watch_button' type="button">
                     </div>
                     <div class="feature_se" id="feature_2">
                         <h3 id="feature_coursename_2"></h3>
                         <p id="feature_message_2"></p>
                         <p id="feature_askdate_2"></p>
-                        <input value="查看全部問題" type="button">
+                        <input value="查看全部問題" class='watch_button' type="button">
                     </div>
                     <div class="feature_se" id="feature_3">
                        
                         <h3 id="feature_coursename_3"></h3>
                         <p id="feature_message_3"></p>
                         <p id="feature_askdate_3"></p>
-                        <input value="查看全部問題" type="button">
+                        <input value="查看全部問題" class='watch_button' type="button">
                     </div>
                     <div class="feature_se" id="feature_4">
                        
                         <h3 id="feature_coursename_4"></h3>
                         <p id="feature_message_4"></p>
                         <p id="feature_askdate_4"></p>
-                        <input value="查看全部問題" type="button">
+                        <input value="查看全部問題" class='watch_button' type="button">
                     </div>
 
                 </div>
@@ -89,7 +89,7 @@
 			}
 
 			$(document).ready(function(){
-               
+                
 				$.ajax({
                 type: "get",
                 url: "http://localhost:1993/course_ask",
@@ -99,13 +99,11 @@
                         for ( i=1 ; i < 5 ; i++ ){
                             if(i<data.length+1){
                                 var ask_data = data.pop()
-                            
-                           
-                            $('#feature_coursename_'+i).text(ask_data['course_name'] + '/' + ask_data['course_teacher'])
-                            var final = ask_data['course_askmessage'].substring(0,30)
-                            console.log(final)
-                            $('#feature_message_'+i).text('心得 ： '+final) 
-                            $('#feature_askdate_'+i).text('詢問日期 ：'+ask_data['askdate'])
+                                $('#feature_coursename_'+i).text(ask_data['course_name'] + '/' + ask_data['course_teacher'])
+                                var final = ask_data['course_askmessage'].substring(0,30)
+                                console.log(final)
+                                $('#feature_message_'+i).text('發問事項 ： '+final) 
+                                $('#feature_askdate_'+i).text('發問日期 ：'+ask_data['askdate'])
                             
                             }
                             else{
@@ -125,9 +123,18 @@
                     alert("Cannot get data");
                 }
             });
-			});
-        </script>
-        <script>
+            });
+            $(document).ajaxStop(function () {
+                $('.watch_button').click(function(){
+                    var num = $(this).parent().attr("id").substring(8,9);
+                    console.log(num)
+                    sessionStorage.setItem('ask_name',document.getElementById('feature_coursename_'+num).innerHTML)
+                    sessionStorage.setItem('ask_message',document.getElementById('feature_message_'+num).innerHTML)
+                    sessionStorage.setItem('ask_date',document.getElementById('feature_askdate_'+num).innerHTML)
+                });
+            });
+         
+
             $(document).ready(function(){
                 $('#logout_button').click(function(){
                 console.log('remove')
