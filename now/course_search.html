@@ -22,59 +22,48 @@
 					<li><a href="login.html" id="logout_button">Logout</a></li>
 				</ul>
 			</nav>
-		</header>
-		<section id="one" class="wrapper style2 special">
-            <div id='ask_div' style='display: none;' class="inner narrow">
-                
-                <form class="grid-form" id='share' action="#">
-                   
-                        <div class="form-group">
-                            <label for="message">學系或科目類別</label>
-                            <select id = 'identity'>
-                                <option  hidden>請選擇科目類別▾</option>
-                                <option value="1111中國文學系">中國文學系</option>
-                                <option value="1212歷史學系">歷史學系</option>
-                                <option value="1313哲學系">哲學系</option>
-                                <option value="1414政治學系">政治學系</option>
-                                <option value="7070巨量資料管理學院學士學位學程">巨量資料管理學院學士學位學程</option>
-                                                                                                                                                                                                                     
-                            </select>
-                        </div>
-                        <br>
-                        <div class="form-group" >
-                            <label for="message">年級</label>
-                            <select id ='academy'>
-                                <option  hidden>請選擇年級▾</option>
-                                <option>大一</option>
-                                <option>大二</option>
-                                <option>大三</option>
-                                <option>大四</option>
-                                <option>大五</option>
-                                <option>其他</option>
-                            </select>
-                        </div>
-                        <br>
+        </header>
+        
+        <section class="wrapper style2 special">
+            <div class="inner narrow">
+                <header>
+                    <h3>熱門討論</h3>
+                </header>
+                <div class="features">
+                    <div class="feature_se" id="feature_1">
                        
-                        <div class="form-control narrow">
-                            <label for="name">課程名稱</label>
-                            <input name="name" id="name" type="text">
-                        </div>
-                        <div class="form-control narrow">
-                            <label >老師名字</label>
-                            <input name="email" id="email" type="email">
-                        </div>
-                        <div class="form-control">
-                            <label>詢問內容 課程需求及注意事項 老師上課風格</label>
-                            <textarea name="message" id="message" rows="3"></textarea>
-                        </div>
+                        <h3 id="feature_coursename_1"></h3>
+                        <p id="feature_message_1"></p>
+                        <p id="feature_rating_1"></p>
+                        <input value="查看全文" type="button">
+                    </div>
+                    <div class="feature_se" id="feature_2">
+                        <h3 id="feature_coursename_2"></h3>
+                        <p id="feature_message_2"></p>
+                        <p id="feature_rating_2"></p>
+                        <input value="查看全文" type="button">
+                    </div>
+                    <div class="feature_se" id="feature_3">
+                       
+                        <h3 id="feature_coursename_3"></h3>
+                        <p id="feature_message_3"></p>
+                        <p id="feature_rating_3"></p>
+                        <input value="查看全文" type="button">
+                    </div>
+                    <div class="feature_se" id="feature_4">
+                       
+                        <h3 id="feature_coursename_4"></h3>
+                        <p id="feature_message_4"></p>
+                        <p id="feature_rating_4"></p>
+                        <input value="查看全文" type="button">
+                    </div>
 
-                        <ul class="actions">
-                            <li><input value="Send Message" type="submit"></li>
-                        </ul>
-                </form>
+                </div>
+                
             </div>
 
         </section>
+		
 		<script>
 			var name = sessionStorage.getItem("key");
 			if (name == 'null'){
@@ -83,12 +72,30 @@
 			}
 
 			$(document).ready(function(){
+                var search_name = sessionStorage.getItem('search_name')
+                var search_teacher = sessionStorage.getItem('search_teacher')
+                var search_grade = sessionStorage.getItem('search_grade')
+                var search_department = sessionStorage.getItem('search_department')
 				$.ajax({
                     type:'post',
                     url:"http://localhost:1993/course_search",
                     dataType: "json",
+                    data:{search_name:search_name,search_teacher:search_teacher,search_grade:search_grade,search_department:search_department},
                     success: function(data){
-                            
+                        console.log(data)
+                        if(data.length != 0){
+                        var data_len = data.length;
+						for ( i=1 ; i < data_len+1; i++ ){
+							var course_data = data.pop()
+                            // $('#trans_sender'+i).text(trans_data['sender'])
+                            $('#feature_coursename_'+i).text(course_data['course_name'] + '/' + course_data['course_teacher'])
+                            var final = course_data['course_message'].substring(0,30)
+                            console.log(final)
+                            $('#feature_message_'+i).text('心得 ： '+final) 
+                            $('#feature_rating_'+i).text('推薦度 ： '+ course_data['rating']) 
+
+						};
+					        }
                         },
                         error: function (error) {
                             alert("Cannot get data");

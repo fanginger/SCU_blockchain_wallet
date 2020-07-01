@@ -201,7 +201,14 @@
             $('#search_button').click(function(){
                 sessionStorage.setItem('search_name',$('#search_name').val())
                 sessionStorage.setItem('search_teacher',$('#search_teacher').val())
-                sessionStorage.setItem('search_grade',$('#search_name').val())
+                var g = document.getElementById("search_grade");
+                var grade_val = g.options[g.selectedIndex].value;
+                sessionStorage.setItem('search_grade',grade_val)
+                var d = document.getElementById("search_department");
+                var department_val = d.options[d.selectedIndex].value;
+                sessionStorage.setItem('search_department',department_val)
+                window.location.href="course_search.html";
+                
 
             })
          });
