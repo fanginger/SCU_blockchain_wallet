@@ -96,9 +96,11 @@
                 dataType: "json",
                 success: function(data){
                     if(data.length != 0){
-                        for ( i=1 ; i < 5 ; i++ ){
+                        console.log(data.length)
+                        console.log(data)
+                        var ask_data = data.pop()
+                        for ( i=0 ; i < 5 ; i++ ){
                             if(i<data.length+1){
-                                var ask_data = data.pop()
                                 $('#feature_coursename_'+i).text(ask_data['course_name'] + '/' + ask_data['course_teacher'])
                                 var final = ask_data['course_askmessage'].substring(0,30)
                                 console.log(final)
