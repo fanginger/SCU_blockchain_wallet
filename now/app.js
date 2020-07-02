@@ -287,9 +287,9 @@ app.get('/course_ask',function(req,res){
 
     CourseaskSchema.find({}, function(err, data) {
         if (!err) { 
-            console.log(data);
+            // console.log(data);
             var data_send = data
-            console.log(data_send[0])
+            console.log('thisis data',data_send)
             res.send(JSON.stringify(data_send))
           
         }
